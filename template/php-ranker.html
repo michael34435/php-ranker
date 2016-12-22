@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>php-ranker</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+      * {
+        word-break: break-all;
+      }
+
+      #chart div[dir=ltr] {
+        margin: auto;
+      }
+
+      .inline {
+        vertical-align: baseline;
+        display: inline-block;
+      }
+
+      .rating {
+        width: 45px;
+        height: 45px;
+      }
+
+      td {
+        vertical-align: middle !important;
+      }
+
+      .rating-4 {
+        background: transparent url(rating-a.svg) center center no-repeat;
+        background-size: 45px 45px;
+      }
+
+      .rating-3 {
+        background: transparent url(rating-b.svg) center center no-repeat;
+        background-size: 45px 45px;
+      }
+
+      .rating-2 {
+        background: transparent url(rating-c.svg) center center no-repeat;
+        background-size: 45px 45px;
+      }
+
+      .rating-1 {
+        background: transparent url(rating-d.svg) center center no-repeat;
+        background-size: 45px 45px;
+      }
+
+      .rating-0 {
+        background: transparent url(rating-f.svg) center center no-repeat;
+        background-size: 45px 45px;
+      }
+    </style>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(function() {
+        var data = google.visualization.arrayToDataTable(<?php echo json_encode($reportChart);?>);
+
+        var options = {
+          pieHole: 0.9,
+          pieSliceTextStyle: {
+            color: 'black',
+          },
+          legend: 'none',
+          colors: <?php echo json_encode($reportColor); ?>,
+          width: 300,
+          height: 300,
+          chartArea: {
+            width:'90%',
+            height:'90%'
+          },
+          tooltip: {
+            trigger: 'focus'
+          }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart'));
+        chart.draw(data, options);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">總體分數</h3>
+            </div>
+            <div class="panel-body">
+              <small>GPA</small>
+              <h2 class="gpa inline"><?php echo $sumGPA; ?></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <table class="table">
+            <thead>
+              <th>評比</th>
+              <th>檔案</th>
+            </thead>
+            <tbody>
+              <?php foreach($reportFiles as $reportFile => $point): ?>
+                <tr>
+                  <td>
+                    <div class="rating rating-<?php echo ceil($point); ?>"></div>
+                  </td>
+                  <td><?php echo $reportFile; ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">得分分佈</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div id="chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

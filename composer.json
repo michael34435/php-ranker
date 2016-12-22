@@ -1,0 +1,19 @@
+{
+    "name": "michael34435/php-ranker",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "michael34435",
+            "email": "michael34435@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmd/phpmd": "^2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPRanker\\": "src"
+        },
+        "files": ["helper.php"]
+    }
+}

@@ -1,0 +1,112 @@
+#!/usr/bin/env php
+<?php
+
+require "vendor/autoload.php";
+
+/**
+ * 處理設定檔
+ */
+$includeDir = [];
+$excludeDir = [];
+$vendor     = realpath(__DIR__ . "/../../../");
+$dirname    = basename($vendor) === "vendor" ? realpath("{$vendor}/../") : getcwd();
+$config     = "{$dirname}/.php-ranker";
+if (file_exists($config) && $config = json_decode(file_get_contents($config))) {
+    isset($config->include_dir) ?: $config->include_dir = $includeDir;
+    isset($config->exclude_dir) ?: $config->exclude_dir = $excludeDir;
+    $includeDir = $config->include_dir;
+    $excludeDir = $config->exclude_dir;
+}
+
+$reportRanks = [];
+$reportFiles = [];
+$default     = [
+    "pmd-report"        => "pmd-warnings.xml",
+    "dry-report"        => "dry-warnings.xml",
+    "checkstyle-report" => "checkstyle-warnings.xml",
+    "export-dir"        => getcwd(),
+];
+$opt         = getopt(null, ["pmd-report:", "checkstyle-report:", "dry-report:", "export-dir:"]);
+$opt         = array_merge($default, $opt);
+$checkstyle  = $opt["checkstyle-report"];
+$pmd         = $opt["pmd-report"];
+$dry         = $opt["dry-report"];
+$export      = $opt["export-dir"];
+$pmdScores   = (new PHPRanker\PMD\Parser($pmd))->parse()->getScore();
+$styleScores = (new PHPRanker\Checkstyle\Parser($checkstyle))->parse()->getScore();
+$dryScores   = (new PHPRanker\Dry\Parser($dry))->parse()->getScore();
+foreach ($includeDir as $include) {
+    foreach (glob_recursive("{$dirname}/{$include}/*.php") as $file) {
+        if (is_excluded($file, $excludeDir)) {
+            continue;
+        }
+
+        isset($pmdScores[$file]) ?: $pmdScores[$file] = 0;
+        isset($dryScores[$file]) ?: $dryScores[$file] = 0;
+        isset($styleScores[$file]) ?: $styleScores[$file] = 0;
+
+        /**
+         * 處理rank資料(phpmd+phpcpd+phpcs)
+         */
+        $reportPoints = $pmdScores[$file] + $dryScores[$file] + $styleScores[$file];
+        $reportGrade  = (new PHPRanker\Grade($reportPoints));
+
+        /**
+         * 去除多餘的資料夾名稱
+         */
+        $file = realpath($file);
+        $file = str_replace("{$dirname}/", "", $file);
+
+        /**
+         * 處理顯示的報告資料
+         */
+        $rank  = $reportGrade->getRank();
+        $point = $reportGrade->getPoint();
+
+        /**
+         * 處理得點
+         */
+        $reportFiles[$file] = $point;
+
+        /**
+         * 處理得點次數
+         */
+        isset($reportRanks[$rank]) ?: $reportRanks[$rank] = 0;
+        $reportRanks[$rank] += 1;
+    }
+}
+
+/**
+ * 處理dount chart
+ */
+$defaultColor  = [
+    "A" => "#5EB34B",
+    "B" => "#8CBF48",
+    "C" => "#F4E839",
+    "D" => "#F2AB46",
+    "F" => "#E92C2F"
+];
+$reportColor   = [];
+$reportChart   = [];
+$reportChart[] = ["rank", "count"];
+foreach ($reportRanks as $rank => $count) {
+    $reportChart[] = [$rank, $count];
+    $reportColor[] = $defaultColor[$rank];
+}
+
+/**
+ * 處理靜態檔案
+ */
+$sumScore = array_sum($reportFiles);
+$sumCount = count($reportFiles);
+$sumGPA   = $sumCount ? $sumScore / $sumCount : 0;
+$sumGPA   = floor($sumGPA * 100) / 100;
+$template = glob_recursive(__DIR__ . "/template/*");
+foreach ($template as $file) {
+    ob_start();
+    include $file;
+    $content = ob_get_contents();
+    ob_end_clean();
+    $file = basename($file);
+    file_put_contents("{$export}/{$file}", $content);
+}
