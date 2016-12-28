@@ -18,23 +18,26 @@ if (file_exists($config) && $config = json_decode(file_get_contents($config))) {
     $excludeDir = $config->exclude_dir;
 }
 
-$reportRanks = [];
-$reportFiles = [];
-$default     = [
+$totalLoc     = 0;
+$reportRanks  = [];
+$reportLOC    = [];
+$reportFiles  = [];
+$reportScores = [];
+$default      = [
     "pmd-report"        => "pmd-warnings.xml",
     "dry-report"        => "dry-warnings.xml",
     "checkstyle-report" => "checkstyle-warnings.xml",
     "export-dir"        => getcwd(),
 ];
-$opt         = getopt(null, ["pmd-report:", "checkstyle-report:", "dry-report:", "export-dir:"]);
-$opt         = array_merge($default, $opt);
-$checkstyle  = $opt["checkstyle-report"];
-$pmd         = $opt["pmd-report"];
-$dry         = $opt["dry-report"];
-$export      = $opt["export-dir"];
-$pmdScores   = (new PHPRanker\PMD\Parser($pmd))->parse()->getScore();
-$styleScores = (new PHPRanker\Checkstyle\Parser($checkstyle))->parse()->getScore();
-$dryScores   = (new PHPRanker\Dry\Parser($dry))->parse()->getScore();
+$opt          = getopt(null, opt_key($default));
+$opt          = array_merge($default, $opt);
+$checkstyle   = $opt["checkstyle-report"];
+$pmd          = $opt["pmd-report"];
+$dry          = $opt["dry-report"];
+$export       = $opt["export-dir"];
+$pmdScores    = (new PHPRanker\PMD\Parser($pmd))->parse()->getScore();
+$styleScores  = (new PHPRanker\Checkstyle\Parser($checkstyle))->parse()->getScore();
+$dryScores    = (new PHPRanker\Dry\Parser($dry))->parse()->getScore();
 foreach ($includeDir as $include) {
     foreach (glob_recursive("{$dirname}/{$include}/*.php") as $file) {
         if (is_excluded($file, $excludeDir)) {
@@ -52,6 +55,12 @@ foreach ($includeDir as $include) {
         $reportGrade  = (new PHPRanker\Grade($reportPoints));
 
         /**
+         * LOC counting
+         */
+        $fileLoc   = loc($file);
+        $totalLoc += $fileLoc;
+
+        /**
          * 去除多餘的資料夾名稱
          */
         $file = realpath($file);
@@ -66,13 +75,19 @@ foreach ($includeDir as $include) {
         /**
          * 處理得點
          */
-        $reportFiles[$file] = $point;
+        $reportFiles[$file]  = $point;
+        $reportScores[$file] = $point * $fileLoc;
 
         /**
          * 處理得點次數
          */
         isset($reportRanks[$rank]) ?: $reportRanks[$rank] = 0;
         $reportRanks[$rank] += 1;
+
+        /**
+         * 報告顯示
+         */
+        $reportLOC[$file] = $fileLoc;
     }
 }
 
@@ -97,16 +112,14 @@ foreach ($reportRanks as $rank => $count) {
 /**
  * 處理靜態檔案
  */
-$sumScore = array_sum($reportFiles);
-$sumCount = count($reportFiles);
+$sumScore = array_sum($reportScores);
+$sumCount = $totalLoc;
 $sumGPA   = $sumCount ? $sumScore / $sumCount : 0;
 $sumGPA   = floor($sumGPA * 100) / 100;
-$template = glob_recursive(__DIR__ . "/template/*");
-foreach ($template as $file) {
-    ob_start();
-    include $file;
-    $content = ob_get_contents();
-    ob_end_clean();
-    $file = basename($file);
-    file_put_contents("{$export}/{$file}", $content);
-}
+$template = __DIR__ . "/template/php-ranker.html";
+ob_start();
+include $template;
+$content = ob_get_contents();
+ob_end_clean();
+$template = basename($template);
+file_put_contents("{$export}/{$template}", $content);

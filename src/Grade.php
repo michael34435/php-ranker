@@ -25,12 +25,8 @@ class Grade
             $point = $rating[2];
 
             if ($points >= $min && $points < $max) {
-                $ratio       = 1 / ($max - $min);
-                $plus        = $ratio * ($points - $min);
-                $point       = $point - $plus;
-                $point       = $point < 0 ? 0 : $point;
                 $this->rank  = $rank;
-                $this->point = round($point, 2);
+                $this->point = $point;
             }
         }
 

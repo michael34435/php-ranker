@@ -2,13 +2,11 @@
 
 if (!function_exists('glob_recursive'))
 {
-
     function glob_recursive($pattern, $flags = 0)
     {
         $files = glob($pattern, $flags);
 
-        foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir)
-        {
+        foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
             $files = array_merge($files, glob_recursive($dir.'/'.basename($pattern), $flags));
         }
 
@@ -18,7 +16,6 @@ if (!function_exists('glob_recursive'))
 
 if (!function_exists("is_excluded"))
 {
-
     function is_excluded($path, array $excludes = [])
     {
         foreach ($excludes as $exclude) {
@@ -34,7 +31,6 @@ if (!function_exists("is_excluded"))
 
 if (!function_exists("opt_key"))
 {
-
     function opt_key(array $default = [])
     {
         $keys    = [];
@@ -44,5 +40,17 @@ if (!function_exists("opt_key"))
         }
 
         return $keys;
+    }
+}
+
+if (!function_exists("loc"))
+{
+    function loc($file)
+    {
+        $file  = file_get_contents($file);
+        $file  = trim($file);
+        $slice = explode("\n", $file);
+
+        return count($slice);
     }
 }

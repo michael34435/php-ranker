@@ -30,27 +30,27 @@
       }
 
       .rating-4 {
-        background: transparent url(rating-a.svg) center center no-repeat;
+        background: transparent url('<?php echo "data:image/svg+xml;utf8,".trim(file_get_contents(__DIR__."/rating-a.svg")); ?>') center center no-repeat;
         background-size: 45px 45px;
       }
 
       .rating-3 {
-        background: transparent url(rating-b.svg) center center no-repeat;
+        background: transparent url('<?php echo "data:image/svg+xml;utf8,".trim(file_get_contents(__DIR__."/rating-b.svg")); ?>') center center no-repeat;
         background-size: 45px 45px;
       }
 
       .rating-2 {
-        background: transparent url(rating-c.svg) center center no-repeat;
+        background: transparent url('<?php echo "data:image/svg+xml;utf8,".trim(file_get_contents(__DIR__."/rating-c.svg")); ?>') center center no-repeat;
         background-size: 45px 45px;
       }
 
       .rating-1 {
-        background: transparent url(rating-d.svg) center center no-repeat;
+        background: transparent url('<?php echo "data:image/svg+xml;utf8,".trim(file_get_contents(__DIR__."/rating-d.svg")); ?>') center center no-repeat;
         background-size: 45px 45px;
       }
 
       .rating-0 {
-        background: transparent url(rating-f.svg) center center no-repeat;
+        background: transparent url('<?php echo "data:image/svg+xml;utf8,".trim(file_get_contents(__DIR__."/rating-f.svg")); ?>') center center no-repeat;
         background-size: 45px 45px;
       }
     </style>
@@ -101,16 +101,18 @@
         <div class="col-sm-8">
           <table class="table">
             <thead>
-              <th>評比</th>
-              <th>檔案</th>
+              <th class="col-sm-1">評比</th>
+              <th class="col-sm-10">檔案</th>
+              <th class="col-sm-1 text-right">LOC</th>
             </thead>
             <tbody>
               <?php foreach($reportFiles as $reportFile => $point): ?>
                 <tr>
                   <td>
-                    <div class="rating rating-<?php echo ceil($point); ?>"></div>
+                    <div class="rating rating-<?php echo $point; ?>"></div>
                   </td>
                   <td><?php echo $reportFile; ?></td>
+                  <td class="text-right"><?php echo $reportLOC[$reportFile];?></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
