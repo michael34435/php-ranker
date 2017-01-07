@@ -8,56 +8,22 @@ class Violation extends AbstractViolation
 {
 
     private $defaultMass = 28;
-
-    private $overage = 100000;
-
-    private $base = 1500000;
-
-    private $semicolon = [
-        "=",
-        "==",
-        "===",
-        "->",
-        "::",
-        ">",
-        ">=",
-        "<",
-        "<=",
-        "+",
-        "-",
-        "*",
-        "/",
-        ">>",
-        "<<",
-        "+=",
-        "-=",
-        "--",
-        "++",
-    ];
-
-    private $doubleSemicolon = [
-        "::",
-        "+=",
-        "-=",
-        "--",
-        "++",
-    ];
+    private $overage     = 100000;
+    private $base        = 1500000;
 
     public function addViolation(array $nodes)
     {
         $code   = $nodes["sourceCode"];
         $tokens = token_get_all("<?php {$code}");
-        $points = substr_count($code, "\n");
+        $points = 0;
         foreach ($tokens as $token) {
             if (is_array($token)) {
                 $token = $token[1];
             }
 
-            if (in_array($token, $this->semicolon)) {
-                $points ++;
-            }
+            $token = trim($token);
 
-            if (in_array($token, $this->doubleSemicolon)) {
+            if ($token) {
                 $points ++;
             }
         }
