@@ -28,11 +28,19 @@ class Violation extends AbstractViolation
         "*",
         "/",
         ">>",
-        "<<"
+        "<<",
+        "+=",
+        "-=",
+        "--",
+        "++",
     ];
 
     private $doubleSemicolon = [
         "::",
+        "+=",
+        "-=",
+        "--",
+        "++",
     ];
 
     public function addViolation(array $nodes)
