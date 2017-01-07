@@ -8,14 +8,15 @@
         }
     ],
     "require": {
-        "phpmd/phpmd": "^2.5",
-        "maths22/sexp-php": "dev-master",
-        "nikic/php-parser": "^3.0"
+        "phpmd/phpmd": "^2.5"
     },
     "autoload": {
         "psr-4": {
             "PHPRanker\\": "src"
         },
         "files": ["helper.php"]
-    }
+    },
+    "bin": [
+        "php-ranker"
+    ]
 }

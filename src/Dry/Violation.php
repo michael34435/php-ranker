@@ -3,15 +3,60 @@
 namespace PHPRanker\Dry;
 
 use PHPRanker\AbstractViolation;
-use DrSlump\Sexp;
 
 class Violation extends AbstractViolation
 {
 
+    private $defaultMass = 28;
+
+    private $overage = 100000;
+
+    private $semicolon = [
+        "=",
+        "==",
+        "===",
+        "->",
+        "::",
+        ">",
+        ">=",
+        "<",
+        "<=",
+        "+",
+        "-",
+        "*",
+        "/",
+        ">>",
+        "<<"
+    ];
+
+    private $doubleSemicolon = [
+        "::",
+    ];
+
     public function addViolation(array $nodes)
     {
-        $code = $nodes["sourceCode"];
-        // $parser = (new PhpParser\ParserFactory())->create(PhpParser\ParserFactory::PREFER_PHP7);
+        $code   = $nodes["sourceCode"];
+        $tokens = token_get_all("<?php {$code}");
+        $points = substr($code, "\n");
+        foreach ($tokens as $token) {
+            if (is_array($token)) {
+                $token = $token[1];
+            }
+
+            if (in_array($token, $this->semicolon)) {
+                $points ++;
+            }
+
+            if (in_array($token, $this->doubleSemicolon)) {
+                $points ++;
+            }
+        }
+
+        if ($points > $this->defaultMass) {
+            $points -= $this->defaultMass;
+            $this->remediation = $points * $this->overage;
+        }
+
         return $this;
     }
 }
