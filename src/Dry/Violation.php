@@ -11,6 +11,8 @@ class Violation extends AbstractViolation
 
     private $overage = 100000;
 
+    private $base = 1500000;
+
     private $semicolon = [
         "=",
         "==",
@@ -37,7 +39,7 @@ class Violation extends AbstractViolation
     {
         $code   = $nodes["sourceCode"];
         $tokens = token_get_all("<?php {$code}");
-        $points = substr($code, "\n");
+        $points = substr_count($code, "\n");
         foreach ($tokens as $token) {
             if (is_array($token)) {
                 $token = $token[1];
@@ -54,7 +56,7 @@ class Violation extends AbstractViolation
 
         if ($points > $this->defaultMass) {
             $points -= $this->defaultMass;
-            $this->remediation = $points * $this->overage;
+            $this->remediation = $this->base + ($points * $this->overage);
         }
 
         return $this;
