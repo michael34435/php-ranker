@@ -63,9 +63,9 @@ For example, `php-ranker` finds three files
 |FooBar.php|A|200|
 |Bar.php|F|1000||
 
-`Foo.php` A rank represent 4 point
-`FooBar.php` A rank represent 4 point, too
-But `Bar.php` is too bad to get score and get 0 point.
+`Foo.php` A rank represent 4 point  
+`FooBar.php` A rank represent 4 point, too  
+But `Bar.php` is too bad to get score and get 0 point.  
 
 And we can find a formula -> *(4 x 100 + 4 x 200 + 0 x 1000) / (200 + 100 + 1000) = 0.93*
 
