@@ -68,6 +68,6 @@ For example, `php-ranker` finds three files
 `FooBar.php` A rank represent 4 point, too
 But `Bar.php` is too bad to get score and get 0 point.
 
-And we'll find a formula -> *(4 x 100 + 4 x 200 + 0 x 1000) / (200 + 100 + 1000) = 0.93*
+And we can find a formula -> *(4 x 100 + 4 x 200 + 0 x 1000) / (200 + 100 + 1000) = 0.93*
 
 `0.93` is the total GPA score for these files.
