@@ -16,20 +16,22 @@ There are three dimensions `php-ranker` taken.
 
 ## How grades are calculated?
 ### What's GPA(Grade Point Average)?
-All grades are follow GPA(Grade Point Average) a concept to determine you is good or bad in average in U.S school.  
+All grades are follow GPA(Grade Point Average) a concept to determine you is good or bad in average in U.S school, most of it are 4-point-rule.  
 
 ### How to calculate it?
 In general, GPA is **four-point**, it means the greatest student get 4 points while the worst get 0 points in this subject.  
 And we'll end up getting an average score from a person.  
 Like this chart:  
 
+
 |Grade|Point|
-|-|-|
+|---|---|
 |A|4.0|
 |B|3.0|
 |C|2.0|
 |D|1.0|
 |F|0.0||
+
 
 For example, there is a student who get two A's(represent 4.0 point) and one B(represent 3 point) and we will get a formula -> *(2 x 4 + 3) / (2 + 1) = 3.67*  
 `3.67` is the final score for this student.
@@ -39,13 +41,15 @@ You have to add a config file named `.php-ranker`(see `.php-ranker.example`) in 
 Then `php-ranker` will read your config file and glob them to compare violation report from `phpcs`, `phpmd` or `phpcpd`.  
 Finally, `php-ranker` will give each file a point and rank your it.(all rules are following `codeclimate`)
 
+
 |Points|Rank|
-|-|-|
+|---|---|
 |0-2M|A|
 |>2M-4M|B|
 |>4M-8M|C|
 |>8M-16M|D|
 |>16M|F||
+
 
 So your file will get a total point and `php-ranker` converts it to alphabetic rank finally.
 
@@ -54,7 +58,7 @@ All GPAs are based on file size.
 For example, `php-ranker` finds three files  
 
 |Filename|Rank|Lines|
-|-|-|-|
+|---|---|---|
 |Foo.php|A|100|
 |FooBar.php|A|200|
 |Bar.php|F|1000||
