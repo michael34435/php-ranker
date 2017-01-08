@@ -16,10 +16,10 @@ There are three dimensions `php-ranker` taken.
 
 ## How grades are calculated?
 ### What's GPA(Grade Point Average)?
-All grades are follow GPA(Grade Point Average) a concept to determine you is good or bad in average in U.S school, most of it are 4-point-rule.  
+All grades are following GPA(Grade Point Average) a concept to determine you is good or bad in average in U.S school, most of it are 4-point-rule.  
 
 ### How to calculate it?
-In general, GPA is **four-point**, it means the greatest student get 4 points while the worst get 0 points in this subject.  
+In general, GPA is **four-point**, it means the greatest student gets 4-point while the worst gets 0-point in this subject.  
 And we'll end up getting an average score from a person.  
 Like this chart:  
 
@@ -33,13 +33,13 @@ Like this chart:
 |F|0.0||
 
 
-For example, there is a student who get two A's(represent 4.0 point) and one B(represent 3 point) and we will get a formula -> *(2 x 4 + 3) / (2 + 1) = 3.67*  
+For example, there is a student who gets two A's(represents 4-point) and one B(represents 3-point) and we will get a formula -> *(2 x 4 + 3) / (2 + 1) = 3.67*  
 `3.67` is the final score for this student.
 
 ### How php-ranker get file score
 You have to add a config file named `.php-ranker`(see `.php-ranker.example`) in your project and composer require `php-ranker`.  
 Then `php-ranker` will read your config file and glob them to compare violation report from `phpcs`, `phpmd` or `phpcpd`.  
-Finally, `php-ranker` will give each file a point and rank your it.(all rules are following `codeclimate`)
+Finally, `php-ranker` gives each file a point below.(all rules are following `codeclimate`)
 
 
 |Points|Rank|
@@ -67,7 +67,7 @@ For example, `php-ranker` finds three files
 `FooBar.php` A rank represent 4 point, too
 But `Bar.php` is too bad to get score and get 0 point.
 
-And we'll find a formula -> *(4 x 100 + 4 x 200 + 0 x 1000) / (200 + 100 + 1000) = 0.93*
+And we can find a formula -> *(4 x 100 + 4 x 200 + 0 x 1000) / (200 + 100 + 1000) = 0.93*
 
 `0.93` is the total GPA score for these files.
 
