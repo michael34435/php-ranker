@@ -16,7 +16,7 @@ There are three dimensions `php-ranker` taken.
 
 ## How grades are calculated?
 ### What's GPA(Grade Point Average)?
-All grades are follow GPA(Grade Point Average) a concept to determine you is good or bad in average in U.S school, most of it are 4-point-rule.  
+All grades are following GPA(Grade Point Average) a concept to determine you is good or bad in average in U.S school, most of it are 4-point-rule.  
 
 ### How to calculate it?
 In general, GPA is **four-point**, it means the greatest student get 4 points while the worst get 0 points in this subject.  
