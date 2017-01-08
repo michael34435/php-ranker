@@ -70,3 +70,19 @@ But `Bar.php` is too bad to get score and get 0 point.
 And we'll find a formula -> *(4 x 100 + 4 x 200 + 0 x 1000) / (200 + 100 + 1000) = 0.93*
 
 `0.93` is the total GPA score for these files.
+
+## How to use php-ranker
+### Install
+```sh
+composer require michael34435/php-ranker
+```
+
+### Usage
+```sh
+./vendor/bin/php-ranker
+```
+
+* `--pmd-report`        - `phpmd` violation report path(xml)
+* `--dry-report`        - `phpcpd` violation report path(xml)  
+* `--checkstyle-report` - `phpcs` violation report(xml)
+* `--export-dir`        - The path you want to store for the GPA report html
