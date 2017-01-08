@@ -33,14 +33,13 @@ Like this chart:
 |F|0.0||
 
 
-For example, there is a student who gets two A's(represent 4-point) and one B(represent 3 
--point) and we will get a formula -> *(2 x 4 + 3) / (2 + 1) = 3.67*  
+For example, there is a student who gets two A's(represents 4-point) and one B(represents 3-point) and we will get a formula -> *(2 x 4 + 3) / (2 + 1) = 3.67*  
 `3.67` is the final score for this student.
 
 ### How php-ranker get file score
 You have to add a config file named `.php-ranker`(see `.php-ranker.example`) in your project and composer require `php-ranker`.  
 Then `php-ranker` will read your config file and glob them to compare violation report from `phpcs`, `phpmd` or `phpcpd`.  
-Finally, `php-ranker` gives each file a point and rank it.(all rules are following `codeclimate`)
+Finally, `php-ranker` gives each file a point below.(all rules are following `codeclimate`)
 
 
 |Points|Rank|
