@@ -39,7 +39,7 @@ For example, there is a student who get two A's(represent 4.0 point) and one B(r
 ### How php-ranker get file score
 You have to add a config file named `.php-ranker`(see `.php-ranker.example`) in your project and composer require `php-ranker`.  
 Then `php-ranker` will read your config file and glob them to compare violation report from `phpcs`, `phpmd` or `phpcpd`.  
-Finally, `php-ranker` will give each file a point and rank your it.(all rules are following `codeclimate`)
+Finally, `php-ranker` gives each file a point and rank it.(all rules are following `codeclimate`)
 
 
 |Points|Rank|
