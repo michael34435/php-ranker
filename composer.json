@@ -14,7 +14,7 @@
         "psr-4": {
             "PHPRanker\\": "src"
         },
-        "files": ["bootstrap.php"]
+        "files": ["helper.php"]
     },
     "bin": [
         "php-ranker"
