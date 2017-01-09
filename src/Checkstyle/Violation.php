@@ -175,7 +175,7 @@ class Violation extends AbstractViolation
             $this->remediation = $this->sniffs[$category];
         } elseif (isset($this->sniffs[$type])) {
             $this->remediation = $this->sniffs[$type];
-        } else {
+        } elseif ($category && $type) {
             $this->remediation = $this->default;
         }
 
