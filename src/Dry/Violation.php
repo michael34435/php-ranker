@@ -10,8 +10,7 @@ class Violation extends AbstractViolation
     private $defaultMass = 28;
     private $overage     = 100000;
     private $base        = 1500000;
-    private $semicolon   = ["{", "}"];
-    private $operator    = ["+=", "-=", "*=", "/=", "++", "--", ".="];
+    private $operator    = ["+=", "-=", "*=", "/=", "++", "--", ".=", "{", "}"];
 
     public function add(array $nodes)
     {
@@ -28,10 +27,6 @@ class Violation extends AbstractViolation
             $token = trim($token);
 
             if ($token) {
-                $points ++;
-            }
-
-            if (in_array($token, $this->semicolon)) {
                 $points ++;
             }
 
