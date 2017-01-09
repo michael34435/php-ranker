@@ -1,0 +1,10 @@
+# Travis CI configuration file.
+
+language: php
+
+php:
+    - 5.6
+    - 7.1
+
+before_script:
+    - composer install
