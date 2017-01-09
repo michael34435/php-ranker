@@ -30,6 +30,14 @@ class Grade
             }
         }
 
+        if (!$this->rank) {
+            $rating      = reset($this->ratings);
+            $keys        = array_keys($this->ratings);
+            $key         = reset($keys);
+            $this->rank  = $key;
+            $this->point = $rating[2];
+        }
+
         $this->points = $points;
     }
 
