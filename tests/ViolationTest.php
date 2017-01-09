@@ -101,7 +101,7 @@ class ViolationTest extends PHPUnit_Framework_TestCase
         } catch (Error $e) {
             $this->assertEquals(get_class($e), TypeError::class);
         } catch (Exception $e) {
-            $this->assertEquals(get_class($e), InvalidArgumentException::class);
+            $this->assertEquals(get_class($e), PHPUnit_Framework_Error::class);
         }
 
         try {
@@ -109,7 +109,7 @@ class ViolationTest extends PHPUnit_Framework_TestCase
         } catch (Error $e) {
             $this->assertEquals(get_class($e), TypeError::class);
         } catch (Exception $e) {
-            $this->assertEquals(get_class($e), InvalidArgumentException::class);
+            $this->assertEquals(get_class($e), PHPUnit_Framework_Error::class);
         }
 
         try {
@@ -117,7 +117,7 @@ class ViolationTest extends PHPUnit_Framework_TestCase
         } catch (Error $e) {
             $this->assertEquals(get_class($e), TypeError::class);
         } catch (Exception $e) {
-            $this->assertEquals(get_class($e), InvalidArgumentException::class);
+            $this->assertEquals(get_class($e), PHPUnit_Framework_Error::class);
         }
     }
 
