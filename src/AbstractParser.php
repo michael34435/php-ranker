@@ -14,7 +14,7 @@ abstract class AbstractParser
 
     public function __construct($content)
     {
-        $this->content = is_file($content) ? file_get_contents($content) : $content;
+        $this->content = is_file($content) ? file_get_contents($content) : trim($content);
     }
 
     public function getScore()
@@ -26,7 +26,6 @@ abstract class AbstractParser
     {
         $dom = new DOMDocument();
         @$dom->loadXML($this->content);
-
         $elements = $dom->getElementsByTagName($tagName);
         foreach ($elements as $element) {
             if ($element->getAttribute("plugin")) {

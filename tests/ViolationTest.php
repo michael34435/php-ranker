@@ -4,7 +4,7 @@ use PHPRanker\PMD\Violation as PMDViolation;
 use PHPRanker\Dry\Violation as DryViolation;
 use PHPRanker\Checkstyle\Violation as CheckstyleViolation;
 
-class ViolationTest extends \PHPUnit_Framework_TestCase
+class ViolationTest extends PHPUnit_Framework_TestCase
 {
 
     /**

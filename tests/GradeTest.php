@@ -2,7 +2,7 @@
 
 use PHPRanker\Grade;
 
-class GradeTest extends \PHPUnit_Framework_TestCase
+class GradeTest extends PHPUnit_Framework_TestCase
 {
 
     /**
