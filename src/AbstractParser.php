@@ -31,7 +31,7 @@ abstract class AbstractParser
         foreach ($elements as $element) {
             if ($element->getAttribute("plugin")) {
                 $nodes    = $this->getNodeValue($element->childNodes);
-                $point    = $violation->addViolation($nodes)->getRemediationPoints();
+                $point    = $violation->add($nodes)->getRemediationPoints();
                 $fileName = $nodes["fileName"];
                 $this->score[$fileName]  = isset($this->score[$fileName]) ? $this->score[$fileName] : 0;
                 $this->score[$fileName] += $point;

@@ -166,8 +166,11 @@ class Violation extends AbstractViolation
         "EscapeOutput"                => 50000,
     ];
 
-    public function addViolation(array $nodes)
+    public function add(array $nodes)
     {
+        isset($nodes["category"]) ?: $nodes["category"] = "";
+        isset($nodes["type"]) ?: $nodes["type"] = "";
+
         $category = $nodes["category"];
         $type     = $nodes["type"];
 

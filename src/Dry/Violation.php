@@ -13,8 +13,10 @@ class Violation extends AbstractViolation
     private $semicolon   = ["{", "}"];
     private $operator    = ["+=", "-=", "*=", "/=", "++", "--", ".="];
 
-    public function addViolation(array $nodes)
+    public function add(array $nodes)
     {
+        isset($nodes["sourceCode"]) ?: $nodes["sourceCode"] = "";
+
         $code   = $nodes["sourceCode"];
         $tokens = token_get_all("<?php {$code}");
         $points = 0;

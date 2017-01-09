@@ -12,5 +12,5 @@ abstract class AbstractViolation
         return $this->remediation;
     }
 
-    abstract public function addViolation(array $nodes);
+    abstract public function add(array $nodes);
 }
