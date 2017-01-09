@@ -1,5 +1,7 @@
 <?php
 
+require_once "vendor/autoload.php";
+
 if (!function_exists('glob_recursive'))
 {
     function glob_recursive($pattern, $flags = 0)
