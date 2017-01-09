@@ -24,7 +24,7 @@ class Grade
             $max   = $rating[1];
             $point = $rating[2];
 
-            if ($points >= $min && $points < $max) {
+            if ($points > $min && $points <= $max) {
                 $this->rank  = $rank;
                 $this->point = $point;
             }
