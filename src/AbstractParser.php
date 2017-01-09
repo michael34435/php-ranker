@@ -33,7 +33,11 @@ abstract class AbstractParser
                 $nodes    = $this->getNodeValue($element->childNodes);
                 $point    = $violation->add($nodes)->getRemediationPoints();
                 $fileName = isset($nodes["fileName"]) ? $nodes["fileName"] : "";
-                $this->score[$fileName]  = isset($this->score[$fileName]) ? $this->score[$fileName] : 0;
+
+                // default score 0
+                isset($this->score[$fileName]) ?: $this->score[$fileName] = 0;
+
+                // plus remediation points
                 $this->score[$fileName] += $point;
             }
         }
