@@ -40,7 +40,7 @@ class Violation extends AbstractViolation
             }
         }
 
-        if ($points > $this->defaultMass) {
+        if ($points >= $this->defaultMass) {
             $points -= $this->defaultMass;
             $this->remediation = $this->base + ($points * $this->overage);
         }
