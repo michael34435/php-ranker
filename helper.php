@@ -47,8 +47,8 @@ if (!function_exists("loc"))
 {
     function loc($file)
     {
-        $file  = file_get_contents($file);
-        $file  = trim($file);
+        $file = file_get_contents($file);
+        $file = trim($file);
 
         return substr_count($file, "\n");
     }
