@@ -20,7 +20,7 @@ if (!function_exists("is_excluded"))
     {
         foreach ($excludes as $exclude) {
             $exclude = realpath($exclude);
-            if (is_dir($exclude) && strpos($path, $exclude) === 0) {
+            if (strpos($path, $exclude) === 0) {
                 return true;
             }
         }

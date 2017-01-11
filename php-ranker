@@ -6,16 +6,16 @@ require "vendor/autoload.php";
 /**
  * 處理設定檔
  */
-$includeDir = [];
-$excludeDir = [];
-$vendor     = realpath(__DIR__ . "/../../../");
-$dirname    = basename($vendor) === "vendor" ? realpath("{$vendor}/../") : getcwd();
-$config     = "{$dirname}/.php-ranker";
+$includes = [];
+$excludes = [];
+$vendor   = realpath(__DIR__ . "/../../../");
+$dirname  = basename($vendor) === "vendor" ? realpath("{$vendor}/../") : getcwd();
+$config   = "{$dirname}/.php-ranker";
 if (file_exists($config) && $config = json_decode(file_get_contents($config))) {
-    isset($config->include_dir) ?: $config->include_dir = $includeDir;
-    isset($config->exclude_dir) ?: $config->exclude_dir = $excludeDir;
-    $includeDir = $config->include_dir;
-    $excludeDir = $config->exclude_dir;
+    isset($config->includes) ?: $config->includes = $includes;
+    isset($config->excludes) ?: $config->excludes = $excludes;
+    $includes = $config->includes;
+    $excludes = $config->excludes;
 }
 
 $totalLoc     = 0;
@@ -38,9 +38,11 @@ $export       = $opt["export-dir"];
 $pmdScores    = (new PHPRanker\PMD\Parser($pmd))->parse()->getScore();
 $styleScores  = (new PHPRanker\Checkstyle\Parser($checkstyle))->parse()->getScore();
 $dryScores    = (new PHPRanker\Dry\Parser($dry))->parse()->getScore();
-foreach ($includeDir as $include) {
-    foreach (glob_recursive("{$dirname}/{$include}/*.php") as $file) {
-        if (is_excluded($file, $excludeDir)) {
+foreach ($includes as $include) {
+    $path  = "{$dirname}/{$include}";
+    $files = is_dir($path) ? glob_recursive("{$path}/*.php") : [$path];
+    foreach ($files as $file) {
+        if (is_excluded($file, $excludes)) {
             continue;
         }
 

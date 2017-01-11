@@ -25,7 +25,7 @@
         height: 45px;
       }
 
-      td {
+      td, .force-vertical {
         vertical-align: middle !important;
       }
 
@@ -129,6 +129,30 @@
                   <div id="chart"></div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">重點檔案</h3>
+            </div>
+            <div class="panel-body">
+              <ul class="media-list">
+                <?php $count = 0; ?>
+                <?php arsort($reportFiles) ?>
+                <?php foreach (array_reverse($reportFiles) as $reportFile => $point): ?>
+                  <?php if ($point < 3 && $count < 5): ?>
+                    <li class="media">
+                      <div class="media-left">
+                        <div class="rating rating-<?php echo $point; ?>"></div>
+                      </div>
+                      <div class="media-body force-vertical">
+                        <?php echo $reportFile ?>
+                      </div>
+                    </li>
+                    <?php $count ++ ?>
+                  <?php endif; ?>
+                <?php endforeach; ?>
+              </ul>
             </div>
           </div>
         </div>
