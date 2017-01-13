@@ -88,3 +88,6 @@ composer require michael34435/php-ranker
 * `--dry-report`        - `phpcpd` violation report path(xml)  
 * `--checkstyle-report` - `phpcs` violation report(xml)
 * `--export-dir`        - The path you want to store for the GPA report html
+
+### Notice
+Version `0.01` and `0.02` only support jenkins report, i would like to recommend you upgrade to `1.0.0` ASAP.
