@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="2.7.1">
+    <file name="/root/src/Foo.php">
+        <error line="1491" column="21" severity="error" message="End comment for long condition not found; expected &quot;//end foreach&quot;" source="Squiz.Commenting.LongConditionClosingComment.Missing"/>
+        <error line="2177" column="8" severity="warning" message="Comment refers to a TODO task" source="Generic.Commenting.Todo.CommentFound"/>
+    </file>
+</checkstyle>
