@@ -50,10 +50,10 @@ class Violation extends AbstractViolation
 
     public function add(array $nodes)
     {
-        isset($nodes["type"]) ?: $nodes["type"] = "";
+        isset($nodes["rule"]) ?: $nodes["rule"] = "";
 
-        $type = $nodes["type"];
-        $name = $this->getRule($type);
+        $rule = $nodes["rule"];
+        $name = $this->getRule($rule);
 
         isset($this->checks[$name]) ?: $this->checks[$name] = 0;
 

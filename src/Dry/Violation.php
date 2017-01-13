@@ -10,30 +10,12 @@ class Violation extends AbstractViolation
     private $defaultMass = 28;
     private $overage     = 100000;
     private $base        = 1500000;
-    private $operator    = ["+=", "-=", "*=", "/=", "++", "--", ".=", "{", "}"];
 
     public function add(array $nodes)
     {
-        isset($nodes["sourceCode"]) ?: $nodes["sourceCode"] = "";
+        isset($nodes["tokens"]) ?: $nodes["tokens"] = 0;
 
-        $code   = $nodes["sourceCode"];
-        $tokens = token_get_all("<?php {$code}");
-        $points = 0;
-        foreach ($tokens as $token) {
-            if (is_array($token)) {
-                $token = $token[1];
-            }
-
-            $token = trim($token);
-
-            if ($token) {
-                $points ++;
-            }
-
-            if (in_array($token, $this->operator)) {
-                $points ++;
-            }
-        }
+        $points = (int) $nodes["tokens"];
 
         if ($points >= $this->defaultMass) {
             $points -= $this->defaultMass;

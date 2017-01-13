@@ -5,6 +5,7 @@ namespace PHPRanker;
 use DOMNodeList;
 use DOMNode;
 use DOMDocument;
+use DOMElement;
 
 abstract class AbstractParser
 {
@@ -28,62 +29,44 @@ abstract class AbstractParser
         @$dom->loadXML($this->content);
         $elements = $dom->getElementsByTagName($tagName);
         foreach ($elements as $element) {
-            if ($element->getAttribute("plugin")) {
-                $nodes    = $this->getNodeValue($element->childNodes);
-                $point    = $violation->add($nodes)->getRemediationPoints();
-                $fileName = isset($nodes["fileName"]) ? $nodes["fileName"] : "";
+            $payload = [];
+            if ($element->getAttribute("name")) {
+                $fileName = $element->getAttribute("name");
+                foreach ($element->childNodes as $child) {
+                    $payload[] = $child;
+                }
+            } else {
+                $fileName  = $element->childNodes->item(1)->getAttribute("path");
+                $payload[] = $element;
+            }
 
-                // default score 0
-                isset($this->score[$fileName]) ?: $this->score[$fileName] = 0;
+            isset($this->score[$fileName]) ?: $this->score[$fileName] = 0;
 
-                // plus remediation points
-                $this->score[$fileName] += $point;
+            foreach ($payload as $dom) {
+                $attributes = $this->getAttributes($dom);
+                if ($attributes) {
+                    $point = $violation->add($attributes)->getRemediationPoints();
+                    $this->score[$fileName] += $point;
+                }
             }
         }
 
         return $this;
     }
 
-    protected function getReference(DOMNode $node, $reference)
+    private function getAttributes($element)
     {
-        $reference = preg_split("/\//", $reference, null, PREG_SPLIT_NO_EMPTY);
-        foreach ($reference as $ref) {
-            if ($ref === "..") {
-                $node = $node->parentNode;
-            } elseif ($ref !== end($reference)) {
-                preg_match("/(\[(\d+)\])$/", $ref, $index);
-                $pos     = $index ? -1 : 0;
-                $item    = array_pop($index) ?: 0;
-                $item    = (int) $item + $pos;
-                $replace = array_pop($index);
-                $ref     = str_replace($replace, "", $ref);
-                $node    = $node->getElementsByTagName($ref)->item($item);
-            } else {
-                $node = $node->getElementsByTagName($ref)->item(0);
+        $attributes = [];
+        if ($element->hasAttributes()) {
+            foreach ($element->attributes as $attr) {
+                $name  = $attr->nodeName;
+                $value = $attr->nodeValue;
+
+                $attributes[$name] = $value;
             }
         }
 
-        return $node;
-    }
-
-    protected function getNodeValue(DOMNodeList $nodes)
-    {
-        $elements = [];
-        foreach ($nodes as $node) {
-            if ($node->nodeType !== XML_ELEMENT_NODE) {
-                continue;
-            }
-
-            $reference = $node->getAttribute("reference");
-            $target    = $this->getReference($node, $reference);
-            if ($target->childNodes->length > 1) {
-                $elements[$target->tagName] = $target->childNodes;
-            } else {
-                $elements[$target->tagName] = $target->textContent;
-            }
-        }
-
-        return $elements;
+        return $attributes;
     }
 
     abstract public function parse();

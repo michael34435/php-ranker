@@ -20,13 +20,13 @@ class ViolationTest extends PHPUnit_Framework_TestCase
 
         // unknown type
         $remediation = (new PMDViolation())
-            ->add(["type" => "Foo"])
+            ->add(["rule" => "Foo"])
             ->getRemediationPoints();
         $this->assertEquals(0, $remediation);
 
         // normal
         $remediation = (new PMDViolation())
-            ->add(["type" => "TooManyMethods"])
+            ->add(["rule" => "TooManyMethods"])
             ->getRemediationPoints();
         $this->assertGreaterThan(0, $remediation);
     }
@@ -44,19 +44,14 @@ class ViolationTest extends PHPUnit_Framework_TestCase
 
         // empty
         $remediation = (new DryViolation())
-            ->add(["sourceCode" => ""])
+            ->add(["tokens" => ""])
             ->getRemediationPoints();
         $this->assertEquals(0, $remediation);
 
-        // shoter than 28 token
-        $remediation = (new DryViolation())
-            ->add(["sourceCode" => "echo 1;"])
-            ->getRemediationPoints();
-        $this->assertEquals(0, $remediation);
 
         // normal, greater than 28
         $remediation = (new DryViolation())
-            ->add(["sourceCode" => "echo 1;echo 1;echo 1;echo 1;echo 1;echo 1;echo 1;echo 1;echo 1;echo 1;"])
+            ->add(["tokens" => "28"])
             ->getRemediationPoints();
         $this->assertGreaterThan(0, $remediation);
     }
@@ -74,19 +69,13 @@ class ViolationTest extends PHPUnit_Framework_TestCase
 
         // unknown type
         $remediation = (new CheckstyleViolation())
-            ->add(["type" => "Foo"])
+            ->add(["source" => "Foo"])
             ->getRemediationPoints();
-        $this->assertEquals(0, $remediation);
+        $this->assertEquals(70000, $remediation);
 
         // normal, use category
         $remediation = (new CheckstyleViolation())
-            ->add(["type" => "ClassDefinitionNameSpacing"])
-            ->getRemediationPoints();
-        $this->assertGreaterThan(0, $remediation);
-
-        // normal, use type
-        $remediation = (new CheckstyleViolation())
-            ->add(["category" => "ClassDefinitionNameSpacing"])
+            ->add(["source" => "Drupal.CSS.ClassDefinitionNameSpacing"])
             ->getRemediationPoints();
         $this->assertGreaterThan(0, $remediation);
     }

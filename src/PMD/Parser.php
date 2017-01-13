@@ -9,6 +9,6 @@ class Parser extends AbstractParser
 
     public function parse()
     {
-        return $this->getNodes("bug", new Violation());
+        return $this->getNodes("file", new Violation());
     }
 }
