@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+    <duplication lines="20" tokens="89">
+        <file path="/root/src/Foo.php" line="1870"/>
+        <file path="/root/src/Foo.php" line="1917"/>
+        <codefragment></codefragment>
+    </duplication>
+</pmd-cpd>
