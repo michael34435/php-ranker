@@ -75,6 +75,7 @@ And we can find a formula -> *(4 x 100 + 4 x 200 + 0 x 1000) / (200 + 100 + 1000
 
 ## How to use php-ranker
 ### Install
+#### Composer
 ```sh
 composer require michael34435/php-ranker
 ```
@@ -90,4 +91,4 @@ composer require michael34435/php-ranker
 * `--export-dir`        - The path you want to store for the GPA report html
 
 ### Notice
-Version `0.01` and `0.02` only support jenkins report, i would like to recommend you upgrade to `1.0.0` ASAP.
+Version `0.01` and `0.02` only support jenkins report, i would like to recommend you to upgrade to `1.0.0` or `dev-master` ASAP.
