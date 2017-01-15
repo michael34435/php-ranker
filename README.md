@@ -79,6 +79,13 @@ And we can find a formula -> *(4 x 100 + 4 x 200 + 0 x 1000) / (200 + 100 + 1000
 ```sh
 composer require michael34435/php-ranker
 ```
+#### Phar
+```sh
+curl -LOk https://github.com/michael34435/php-ranker/raw/master/build/php-ranker
+chown root php-ranker
+chgrp root php-ranker
+mv php-ranker /usr/bin/php-ranker
+```
 
 ### Usage
 ```sh
