@@ -82,8 +82,7 @@ composer require michael34435/php-ranker
 #### Phar
 ```sh
 curl -LOk https://github.com/michael34435/php-ranker/raw/master/build/php-ranker
-chown root php-ranker
-chgrp root php-ranker
+chmod +x php-ranker
 mv php-ranker /usr/bin/php-ranker
 ```
 
