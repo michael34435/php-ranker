@@ -15,11 +15,11 @@ class Violation extends AbstractViolation
     {
         isset($nodes["tokens"]) ?: $nodes["tokens"] = 0;
 
-        $points = (int) $nodes["tokens"];
+        $tokens = (int) $nodes["tokens"];
 
-        if ($points >= $this->defaultMass) {
-            $points -= $this->defaultMass;
-            $this->remediation = $this->base + ($points * $this->overage);
+        if ($tokens >= $this->defaultMass) {
+            $tokens -= $this->defaultMass;
+            $this->remediation = $this->base + ($tokens * $this->overage);
         }
 
         return $this;
