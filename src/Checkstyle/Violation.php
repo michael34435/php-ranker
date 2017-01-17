@@ -6,8 +6,12 @@ use PHPRanker\AbstractViolation;
 
 class Violation extends AbstractViolation
 {
-    private $default = 70000;
-    private $sniffs  = [
+    private $severity = [
+        "warning" => 5,
+        "error"   => 5,
+    ];
+    private $default  = 70000;
+    private $sniffs   = [
         "Drupal.Array.Array" => 60000,
         "Drupal.CSS.ClassDefinitionNameSpacing" => 50000,
         "Drupal.CSS.ColourDefinition" => 50000,
@@ -169,13 +173,15 @@ class Violation extends AbstractViolation
     public function add(array $nodes)
     {
         isset($nodes["source"]) ?: $nodes["source"] = "";
+        isset($nodes["severity"]) ?: $nodes["severity"] = "warning";
 
-        $source = $nodes["source"];
+        $source   = $nodes["source"];
+        $severity = $this->severity[$nodes["severity"]];
 
         if (isset($this->sniffs[$source])) {
             $this->remediation = $this->sniffs[$source];
         } elseif ($source) {
-            $this->remediation = $this->default;
+            $this->remediation = $this->default * $severity;
         }
 
         return $this;

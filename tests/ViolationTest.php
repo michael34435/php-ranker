@@ -71,7 +71,8 @@ class ViolationTest extends PHPUnit_Framework_TestCase
         $remediation = (new CheckstyleViolation())
             ->add(["source" => "Foo"])
             ->getRemediationPoints();
-        $this->assertEquals(70000, $remediation);
+        $this->assertEquals(0, $remediation % 70000);
+        $this->assertGreaterThan(0, $remediation);
 
         // normal, use category
         $remediation = (new CheckstyleViolation())
