@@ -7,7 +7,7 @@ use PHPRanker\AbstractViolation;
 class Violation extends AbstractViolation
 {
     private $severity = [
-        "warning" => 3,
+        "warning" => 5,
         "error"   => 5,
     ];
     private $default  = 70000;
