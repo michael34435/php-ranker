@@ -2,7 +2,7 @@
 <pmd version="@project.version@" timestamp="2017-01-11T16:26:40+08:00">
     <file name="/root/src/Foo.php">
         <violation beginline="22" endline="553" rule="ExcessiveClassComplexity" ruleset="Code Size Rules" package="Bar" externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity" class="Foo" priority="3">
-            The class AberrantBySystemService has an overall complexity of 75 which is very high. The configured complexity threshold is 50.
+            The class Foo has an overall complexity of 75 which is very high. The configured complexity threshold is 50.
         </violation>
     </file>
 </pmd>
