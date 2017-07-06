@@ -4,7 +4,7 @@ use PHPRanker\Checkstyle\Parser as CheckstyleParser;
 use PHPRanker\PMD\Parser as PMDParser;
 use PHPRanker\Dry\Parser as DryParser;
 
-class ParserTest extends PHPUnit_Framework_TestCase
+class ParserTest extends PHPUnit\Framework\TestCase
 {
 
     /**
