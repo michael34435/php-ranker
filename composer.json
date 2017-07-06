@@ -1,5 +1,6 @@
 {
     "name": "michael34435/php-ranker",
+    "description": "Grab GPA from your project with phpcs/phpmd/phpcpd violation report",
     "license": "MIT",
     "authors": [
         {
